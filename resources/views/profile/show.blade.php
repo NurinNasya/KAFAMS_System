@@ -1,5 +1,13 @@
 
-@extends('layouts.mainAdmin-layout')
+@php
+    $layout = match (auth()->user()->type) {
+        'admin' => 'layouts.mainAdmin-layout',
+        'parent' => 'layouts.mainParent-layout',
+        'student' => 'layouts.main-layout',
+    };
+@endphp
+
+@extends($layout)
 
 @section('content')
 <div class="container-fluid py-4">
@@ -40,4 +48,3 @@
 @endsection
 
 
-  

@@ -1,5 +1,14 @@
-@extends('layouts.main-layout')
- 
+@php
+    $layout = match (auth()->user()->type) {
+        'admin' => 'layouts.mainAdmin-layout',
+        'parent' => 'layouts.mainParent-layout',
+        'student' => 'layouts.main-layout',
+    };
+@endphp
+
+@extends($layout)
+
+
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
@@ -11,13 +20,13 @@
             </div>
         </div>
     </div>
-   
+
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
     @endif
-   
+
     <table class="table table-bordered">
         <tr>
             <th>No</th>
@@ -36,21 +45,21 @@
             <td>{{ $result->marks }}</td>
             <td>
                 <form action="{{ route('results.destroy',$result->id) }}" method="POST">
-   
+
                     <a class="btn btn-info" href="{{ route('results.show',$result->id) }}">Show</a>
-    
+
                     <a class="btn btn-primary" href="{{ route('results.edit',$result->id) }}">Edit</a>
-   
+
                     @csrf
                     @method('DELETE')
-      
+
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </td>
         </tr>
         @endforeach
     </table>
-  
+
     {!! $results->links() !!}
-      
+
 @endsection

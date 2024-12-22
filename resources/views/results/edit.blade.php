@@ -1,5 +1,13 @@
-@extends('layouts.main-layout')
-   
+@php
+    $layout = match (auth()->user()->type) {
+        'admin' => 'layouts.mainAdmin-layout',
+        'parent' => 'layouts.mainParent-layout',
+        'student' => 'layouts.main-layout',
+    };
+@endphp
+
+@extends($layout)
+
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
@@ -11,7 +19,7 @@
             </div>
         </div>
     </div>
-   
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -22,11 +30,11 @@
             </ul>
         </div>
     @endif
-  
+
     <form action="{{ route('results.update',$result->id) }}" method="POST">
         @csrf
         @method('PUT')
-   
+
          <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
@@ -56,6 +64,6 @@
               <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </div>
-   
+
     </form>
 @endsection

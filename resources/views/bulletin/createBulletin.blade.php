@@ -1,4 +1,12 @@
-@extends('layouts.main-layout')
+@php
+    $layout = match (auth()->user()->type) {
+        'admin' => 'layouts.mainAdmin-layout',
+        'parent' => 'layouts.mainParent-layout',
+        'student' => 'layouts.main-layout',
+    };
+@endphp
+
+@extends($layout)
 
 @section('content')
 <div class="row mb-4">
@@ -18,7 +26,7 @@
     .card-header {
         border-bottom: 2px solid black;
     }
-    
+
     .card {
         border: 2px solid black;
         border-radius: 10px;

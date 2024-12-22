@@ -86,7 +86,7 @@
 <body>
 
 <div class="sidebar">
-    <h2>KAFAMS</h2>
+    <h2>KAFAMS STUDENT</h2>
     <a href="{{ route('home.student') }}" class="{{ Request::routeIs('home.student') ? 'active' : '' }}">Home</a>
     <a href="{{ route('profile.index2') }}" class="{{ Request::routeIs('profile.index2') ? 'active' : '' }}">Students Profile</a>
     <a href="{{ route('activities.index') }}" class="{{ Request::routeIs('activities.index') ? 'active' : '' }}">KAFA Activities</a>

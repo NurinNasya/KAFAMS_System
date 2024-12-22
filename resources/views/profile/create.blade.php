@@ -1,5 +1,12 @@
-@extends('layouts.main-layout')
+@php
+    $layout = match (auth()->user()->type) {
+        'admin' => 'layouts.mainAdmin-layout',
+        'parent' => 'layouts.mainParent-layout',
+        'student' => 'layouts.main-layout',
+    };
+@endphp
 
+@extends($layout)
 @section('content')
     <div class="container-fluid py-4">
         <div class="row">
@@ -38,7 +45,7 @@
                             <input type="text" name="contact_no" placeholder="Contact No" style="width: 80%; padding: 4px;" />
                             </div>
                             <div>
-                            <button type="submit" style="background-color: #007bff; color: #fff; padding: 10px 15px; border: none; cursor: pointer; border-radius: 5px;margin-left: 50px">Submit</button>   
+                            <button type="submit" style="background-color: #007bff; color: #fff; padding: 10px 15px; border: none; cursor: pointer; border-radius: 5px;margin-left: 50px">Submit</button>
                             <!--<input type="submit" value="Save details" style="background-color: #007bff; color: #fff; padding: 10px 15px; border: none; cursor: pointer; border-radius: 5px;margin-left: 50px" />
                               </div>-->
                             </form>
