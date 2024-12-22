@@ -50,6 +50,12 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
+                    <strong>Subject:</strong>
+                    <textarea class="form-control" style="height:150px" name="assessment_subject" placeholder="assessment_subject">{{ $result->assessment_subject }}</textarea>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
                     <strong>Type of assessment:</strong>
                     <textarea class="form-control" style="height:150px" name="assessment_type" placeholder="assessment_type">{{ $result->assessment_type }}</textarea>
                 </div>

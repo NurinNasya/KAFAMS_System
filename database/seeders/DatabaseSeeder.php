@@ -14,28 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-
-    //    DB::table('users')->insert([
-    //         'name' => 'student',
-    //         'email' => 'student@gmail.com',
-    //         'type' => 'student',
-    //         'password' => bcrypt('1234')
-    //     ]);
-
-        DB::table('users')->insert([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'type' => 'admin',
-            'password' => bcrypt('secret')
+        $this->call([
+            UsersTableSeeder::class,
+            ResultsTableSeeder::class,
+            BulletinsTableSeeder::class,
         ]);
-
-        // DB::table('users')->insert([
-        //     'name' => 'parent',
-        //     'email' => 'parent@gmail.com',
-        //     'type' => 'parent',
-        //     'password' => bcrypt('1234')
-        // ]);
     }
 }

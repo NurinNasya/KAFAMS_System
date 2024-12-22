@@ -1,13 +1,13 @@
 <?php
-  
+
 namespace App\Http\Controllers;
-  
+
 use App\Models\Result;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
-  
+
 class ResultController extends Controller
 {
     /**
@@ -16,11 +16,11 @@ class ResultController extends Controller
     public function index(): View
     {
         $results = Result::latest()->paginate(5);
-        
+
         return view('results.index',compact('results'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
     }
-  
+
     /**
      * Show the form for creating a new resource.
      */
@@ -28,7 +28,7 @@ class ResultController extends Controller
     {
         return view('results.create');
     }
-  
+
     /**
      * Store a newly created resource in storage.
      */
@@ -37,16 +37,17 @@ class ResultController extends Controller
         $request->validate([
             'student_name' => 'required',
             'student_class' => 'required',
+            'assessment_subject' => 'required',
             'assessment_type' => 'required',
             'marks' => 'required',
         ]);
-        
+
         Result::create($request->all());
-         
+
         return redirect()->route('results.index')
                         ->with('success','Result created successfully.');
     }
-  
+
     /**
      * Display the specified resource.
      */
@@ -54,7 +55,7 @@ class ResultController extends Controller
     {
         return view('results.show',compact('result'));
     }
-  
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -62,7 +63,7 @@ class ResultController extends Controller
     {
         return view('results.edit',compact('result'));
     }
-  
+
     /**
      * Update the specified resource in storage.
      */
@@ -71,23 +72,24 @@ class ResultController extends Controller
         $request->validate([
             'student_name' => 'required',
             'student_class' => 'required',
+            'assessment_subject' => 'required',
             'assessment_type' => 'required',
             'marks' => 'required',
         ]);
-        
+
         $result->update($request->all());
-        
+
         return redirect()->route('results.index')
                         ->with('success','Result updated successfully');
     }
-  
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Result $result): RedirectResponse
     {
         $result->delete();
-         
+
         return redirect()->route('results.index')
                         ->with('success','Result deleted successfully');
     }

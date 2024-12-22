@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('student_name'); // Correctly defining the column
             $table->string('student_class');
+            $table->string('assessment_subject');
             $table->string('assessment_type');
             $table->integer('marks');
             $table->timestamps();

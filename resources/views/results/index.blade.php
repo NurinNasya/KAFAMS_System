@@ -32,6 +32,7 @@
             <th>No</th>
             <th>Name</th>
             <th>Class</th>
+            <th>Subject</th>
             <th>Type of assessment</th>
             <th>Score</th>
             <th width="280px">Action</th>
@@ -41,6 +42,7 @@
             <td>{{ ++$i }}</td>
             <td>{{ $result->student_name }}</td>
             <td>{{ $result->student_class }}</td>
+            <td>{{ $result->assessment_subject }}</td>
             <td>{{ $result->assessment_type }}</td>
             <td>{{ $result->marks }}</td>
             <td>

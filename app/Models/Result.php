@@ -12,6 +12,7 @@ class Result extends Model
     protected $fillable = [
         'student_name',
         'student_class',
+        'assessment_subject',
         'assessment_type',
         'marks',
     ];
