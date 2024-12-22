@@ -39,6 +39,20 @@ class ProfilesTableSeeder extends Seeder
           $students = User::where('type', 'student')->get();
           $parents = User::where('type', 'parent')->get();
 
+        // Define some Malaysian addresses (street names, cities, etc.)
+        $malaysian_addresses = [
+            'Jalan Kuching, 51200 Kuala Lumpur, Wilayah Persekutuan',
+            'Jalan Tun Razak, 50400 Kuala Lumpur, Wilayah Persekutuan',
+            'Jalan Ampang, 55000 Kuala Lumpur, Wilayah Persekutuan',
+            'Jalan Petaling, 50000 Kuala Lumpur, Wilayah Persekutuan',
+            'Jalan Johor, 81000 Johor Bahru, Johor',
+            'Jalan Raja Laut, 50350 Kuala Lumpur, Wilayah Persekutuan',
+            'Jalan Bukit Bintang, 55100 Kuala Lumpur, Wilayah Persekutuan',
+            'Jalan Titiwangsa, 53200 Kuala Lumpur, Wilayah Persekutuan',
+            'Jalan Mersing, 86000 Mersing, Johor',
+            'Jalan Sg. Pencala, 56000 Kuala Lumpur, Wilayah Persekutuan'
+        ];
+
           foreach ($students as $student) {
               // Determine gender based on the student's name
               $gender = 'Male';
@@ -54,7 +68,7 @@ class ProfilesTableSeeder extends Seeder
                   'user_id' => $student->id,
                   'student_name' => $student->name,
                   'gender' => $gender,
-                  'address' => fake()->address(),
+                  'address' => fake()->randomElement($malaysian_addresses),
                   'parent_name' => $parent->name, // Parent name from the parent user
                   'contact_no' => fake()->numerify('01########'),
               ]);
