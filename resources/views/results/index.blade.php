@@ -50,12 +50,14 @@
 
                     <a class="btn btn-info" href="{{ route('results.show',$result->id) }}">Show</a>
 
-                    <a class="btn btn-primary" href="{{ route('results.edit',$result->id) }}">Edit</a>
+                    @if(Auth::check() && Auth::user()->type === 'admin')
+                        <a class="btn btn-primary" href="{{ route('results.edit', $result->id) }}">Edit</a>
 
-                    @csrf
-                    @method('DELETE')
+                        @csrf
+                        @method('DELETE')
 
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    @endif
                 </form>
             </td>
         </tr>
