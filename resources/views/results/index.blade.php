@@ -16,7 +16,10 @@
                 <h2>manage student result</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('results.create') }}"> Create New Result</a>
+                @if(Auth::check() && Auth::user()->type === 'admin')
+
+                    <a class="btn btn-success" href="{{ route('results.create') }}"> Create New Result</a>
+                @endif
             </div>
         </div>
     </div>
