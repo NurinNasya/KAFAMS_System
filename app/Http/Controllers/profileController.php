@@ -15,8 +15,11 @@ class profileController extends Controller
 
 
     public function index(){
-        $profiles = profile::all();//fetch all records from profile Model
+        $profiles = Profile::paginate(10); // Fetch 10 profiles per page
         return view('profile.update', ['profiles' => $profiles]);
+        
+        //$profiles = profile::all();//fetch all records from profile Model
+        //return view('profile.update', ['profiles' => $profiles]);
     }
 
      public function index2()
