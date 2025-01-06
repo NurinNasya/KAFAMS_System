@@ -36,7 +36,6 @@ class HomeController extends Controller
                     'highest' => $marks->max(),
                     'lowest' => $marks->min(),
                     'mean' => round($marks->average(), 2),
-                    'total' => $marks->sum(),
                 ];
             }
 
