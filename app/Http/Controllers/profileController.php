@@ -99,6 +99,33 @@ class profileController extends Controller
         return view('profile.edit', ['profile' => $profile]);
     }
     
+    //adding
+    // Update the profile data in the database
+    public function update(Request $request, $id)
+    {
+        $profile = Profile::findOrFail($id); // Find the profile or fail if not found
+
+        // Validate the incoming data
+        $request->validate([
+            'student_name' => 'required|string',
+            'gender' => 'required|string',
+            'address' => 'required|string',
+            'parent_name' => 'required|string',
+            'contact_no' => 'required|numeric',
+        ]);
+
+        // Update the profile with the new data from the form
+        $profile->update([
+            'student_name' => $request->input('student_name'),
+            'gender' => $request->input('gender'),
+            'address' => $request->input('address'),
+            'parent_name' => $request->input('parent_name'),
+            'contact_no' => $request->input('contact_no'),
+        ]);
+
+        // Redirect to the profile view page after updating
+        return redirect(route('profile.view', ['id' => $profile->id]));
+    }
 
     // public function destroy(profile $profile)
     // {

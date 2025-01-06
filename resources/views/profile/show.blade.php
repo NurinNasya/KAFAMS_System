@@ -10,7 +10,45 @@
 @extends($layout)
 
 @section('content')
-<div class="container-fluid py-4">
+<div class="container-fluid px-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mt-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 fs-4">Student's Profile</h5>
+                </div>
+
+                <div class="card-body p-4">
+                    <div class="row mb-3">
+                        <div class="col-md-2 fw-bold" style="font-size: 1.25rem;">Name:</div>
+                        <div class="col-md-10" style="font-size: 1.25rem;">{{ $profile->student_name }}</div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-2 fw-bold" style="font-size: 1.25rem;">Gender:</div>
+                        <div class="col-md-10" style="font-size: 1.25rem;">{{ $profile->gender }}</div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-2 fw-bold" style="font-size: 1.25rem;">Address:</div>
+                        <div class="col-md-10" style="font-size: 1.25rem;">{{ $profile->address }}</div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-2 fw-bold" style="font-size: 1.25rem;">Parent's Name:</div>
+                        <div class="col-md-10" style="font-size: 1.25rem;">{{ $profile->parent_name }}</div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-2 fw-bold" style="font-size: 1.25rem;">Contact No:</div>
+                        <div class="col-md-10" style="font-size: 1.25rem;">{{ $profile->contact_no }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="container-fluid py-4">
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
@@ -44,7 +82,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 @endsection
 
 
