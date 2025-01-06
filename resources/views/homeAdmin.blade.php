@@ -73,7 +73,6 @@
                 <th>Highest Marks</th>
                 <th>Lowest Marks</th>
                 <th>Mean Marks</th>
-                <th>Total Marks</th>
             </tr>
         </thead>
         <tbody>
@@ -83,7 +82,6 @@
                 <td>{{ $stats['highest'] }}</td>
                 <td>{{ $stats['lowest'] }}</td>
                 <td>{{ $stats['mean'] }}</td>
-                <td>{{ $stats['total'] }}</td>
             </tr>
             @endforeach
         </tbody>
