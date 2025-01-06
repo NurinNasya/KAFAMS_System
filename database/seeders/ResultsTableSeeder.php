@@ -14,10 +14,17 @@ class ResultsTableSeeder extends Seeder
     public function run(): void
     {
         // List of KAFA subjects
-        $subjects = ['Adab', 'Akhlak', 'Tauhid', 'Feqah', 'Ibadah', 'Sirah'];
+        $subjects = [  'Al-Quran',
+        'Akidah',
+        'Ibadah',
+        'Sirah',
+        'Adab',
+        'Bahasa Arab',
+        'Jawi dan Khat',
+        'Tahfiz al-Quran'];
 
         // Types of assessments
-        $assessments = ['Peperiksaan Awal Tahun', 'Peperiksaan Pertengahan Tahun'];
+        $assessments = ['Peperiksaan Awal Tahun 2024', 'Peperiksaan Pertengahan Tahun 2024'];
 
         // Get all students from the `users` table
         $students = DB::table('users')->where('type', 'student')->get();

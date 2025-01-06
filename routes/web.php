@@ -18,7 +18,7 @@ Auth::routes();
 //home
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/home/admin', [HomeController::class, 'index'])->name('home.admin');
+Route::get('/home/admin', action: [HomeController::class, 'index'])->name('home.admin');
 Route::get('/home/student', [HomeController::class, 'index'])->name('home.student');
 Route::get('/home/parent', [HomeController::class, 'index'])->name('home.parent');
 //result
