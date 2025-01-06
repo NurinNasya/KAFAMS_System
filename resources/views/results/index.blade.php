@@ -72,5 +72,7 @@
         @endforeach
     </table>
 
-    {!! $results->links() !!}
+    <!-- Updated Pagination -->
+    {!! $results->links('pagination::bootstrap-4') !!}
 @endsection
+
