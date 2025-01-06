@@ -51,4 +51,13 @@ Route::delete('/profile/delete/{id}', [profileController::class, 'destroy'])->na
 //Route::get('/profile/index2/{id}', [ProfileController::class, 'index2'])->name('profile.index2')
 // Route::get('/create',[profileController::class, 'create'])->name('profile.create');;
 
-Route::get('kafa-activities', [ActivityController::class, 'index'])->name('activities.index');
+
+// Route for displaying available quizzes
+Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
+
+// Route for displaying quizzes by subject
+Route::get('/quiz/{id}', [ActivityController::class, 'show'])->name('activities.show');
+
+// Route for submitting quiz answers
+Route::post('/submit-quiz', [ActivityController::class, 'submitQuiz'])->name('submit.quiz');
+
