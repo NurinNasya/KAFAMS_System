@@ -12,30 +12,36 @@ use Illuminate\View\View;
 class BulletinController extends Controller
 {
     public function index(Request $request)
-    {
-        $query = Bulletins::query();
+{
+    // Start the query
+    $query = Bulletins::query();
 
-        $category = $request->input('category', 'all');
+    // Get the category from the request
+    $category = $request->input('category', 'all');
 
-        if ($category == 'all') {
-            $bulletins = Bulletins::all();
-        } else {
-            $bulletins = Bulletins::where('bulletin_category', $category)->get();
-        }
-
-            // Sorting logic
-        if ($request->has('sort')) {
-            if ($request->sort == 'date_asc') {
-                $query->orderBy('created_at', 'asc');
-            } else {
-                $query->orderBy('created_at', 'desc');
-            }
-        }
-        $bulletins = $query->orderBy('created_at', 'desc')->get();
-    
-
-        return view('bulletin.indexBulletin', compact('bulletins', 'category'));
+    // Apply filtering based on the category
+    if ($category != 'all') {
+        $query->where('bulletin_category', $category);
     }
+
+    // Apply sorting logic
+    if ($request->has('sort')) {
+        if ($request->sort == 'date_asc') {
+            $query->orderBy('created_at', 'asc');
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+    } else {
+        // Default sorting if no sort parameter is provided
+        $query->orderBy('created_at', 'desc');
+    }
+
+    // Execute the query and get the results
+    $bulletins = $query->get();
+
+    // Return the view with the bulletins and category
+    return view('bulletin.indexBulletin', compact('bulletins', 'category'));
+}
 
     public function indexAdmin(Request $request)
     {
