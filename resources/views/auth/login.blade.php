@@ -4,6 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+        <div class="text-center mb-4">
+                <h1>KAFA System</h1>
+            </div>
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
