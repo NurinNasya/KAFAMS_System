@@ -12,19 +12,19 @@
 <div class="container">
     <h1>Quiz for {{ $quiz->subject }}</h1>
 
-    <form action="{{ route('submit.quiz') }}" method="POST">
-        @csrf
-        <input type="hidden" name="quiz_id" value="{{ $quiz->id }}">
-
-        <div class="question">
-            <p>{{ $quiz->question }}</p>
-            <label><input type="radio" name="question_{{ $quiz->id }}" value="A"> {{ $quiz->option_a }}</label><br>
-            <label><input type="radio" name="question_{{ $quiz->id }}" value="B"> {{ $quiz->option_b }}</label><br>
-            <label><input type="radio" name="question_{{ $quiz->id }}" value="C"> {{ $quiz->option_c }}</label><br>
-            <label><input type="radio" name="question_{{ $quiz->id }}" value="D"> {{ $quiz->option_d }}</label><br><br>
-        </div>
-
-        <button type="submit">Submit</button>
-    </form>
+    @if(auth()->user()->type === 'student')
+        <!-- Display the student's own results -->
+        <h2>Your Marks</h2>
+        <p>Score: {{ $quiz->score }}</p>
+        <!-- Optionally, you can display more details like correct answers, etc. -->
+    @elseif(auth()->user()->type === 'admin')
+        <!-- Admin can see quiz details, student name, and their score -->
+        <h2>Quiz Results</h2>
+        <p>Student: {{ $quiz->student->name }}</p>
+        <p>Score: {{ $quiz->score }}</p>
+    @else
+        <p>Unauthorized access!</p>
+    @endif
 </div>
 @endsection
+

@@ -1,12 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Result;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class ResultController extends Controller
 {
@@ -16,11 +15,24 @@ class ResultController extends Controller
     public function index(Request $request): View
     {
         $search = $request->input('search'); // Get the search query
-        $results = Result::when($search, function ($query, $search) {
-            return $query->where('student_name', 'like', "%$search%")
-                         ->orWhere('student_class', 'like', "%$search%")
-                         ->orWhere('assessment_subject', 'like', "%$search%");
-        })->latest()->paginate(5);
+        $user = Auth::user(); // Get the authenticated user
+
+        // If the user is a student, only show their own results
+        if ($user->type === 'student') {
+            $results = Result::where('student_name', $user->name) // Filter by the logged-in student's name
+                             ->when($search, function ($query, $search) {
+                                 return $query->where('student_name', 'like', "%$search%")
+                                              ->orWhere('student_class', 'like', "%$search%")
+                                              ->orWhere('assessment_subject', 'like', "%$search%");
+                             })->latest()->paginate(5);
+        } else {
+            // If the user is a teacher or admin, they can view all results
+            $results = Result::when($search, function ($query, $search) {
+                return $query->where('student_name', 'like', "%$search%")
+                             ->orWhere('student_class', 'like', "%$search%")
+                             ->orWhere('assessment_subject', 'like', "%$search%");
+            })->latest()->paginate(5);
+        }
 
         return view('results.index', compact('results', 'search'))
                     ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -58,6 +70,14 @@ class ResultController extends Controller
      */
     public function show(Result $result): View
     {
+        $user = Auth::user();
+
+        // If the user is a student, they should only be able to see their own result
+        if ($user->type === 'student' && $result->student_name !== $user->name) {
+            abort(403, 'Unauthorized action.'); // Deny access if the student tries to view another student's result
+        }
+
+        // If the user is an admin or teacher, allow viewing all results
         return view('results.show', compact('result'));
     }
 

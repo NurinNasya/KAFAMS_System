@@ -75,4 +75,3 @@
     <!-- Updated Pagination -->
     {!! $results->links('pagination::bootstrap-4') !!}
 @endsection
-
