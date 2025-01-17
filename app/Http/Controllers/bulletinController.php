@@ -13,6 +13,8 @@ class BulletinController extends Controller
 {
     public function index(Request $request)
     {
+        $query = Bulletins::query();
+
         $category = $request->input('category', 'all');
 
         if ($category == 'all') {
@@ -20,6 +22,17 @@ class BulletinController extends Controller
         } else {
             $bulletins = Bulletins::where('bulletin_category', $category)->get();
         }
+
+            // Sorting logic
+        if ($request->has('sort')) {
+            if ($request->sort == 'date_asc') {
+                $query->orderBy('created_at', 'asc');
+            } else {
+                $query->orderBy('created_at', 'desc');
+            }
+        }
+        $bulletins = $query->orderBy('created_at', 'desc')->get();
+    
 
         return view('bulletin.indexBulletin', compact('bulletins', 'category'));
     }
