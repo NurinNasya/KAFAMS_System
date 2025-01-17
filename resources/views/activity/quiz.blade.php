@@ -1,7 +1,6 @@
 @php
     $layout = match (auth()->user()->type) {
         'admin' => 'layouts.mainAdmin-layout',
-        'parent' => 'layouts.mainParent-layout',
         'student' => 'layouts.main-layout',
     };
 @endphp

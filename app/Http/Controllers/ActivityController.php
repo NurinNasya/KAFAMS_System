@@ -4,53 +4,77 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
 {
-    // Display all quizzes
+    // Display all activities
     public function index()
     {
-        // Fetch all quizzes from the database
-        $quizzes = Activity::all();
+        $activities = Activity::all();
 
-        // Return the view with the quizzes data
-        return view('activity.index', compact('quizzes'));
+        $activities->each(function ($activity) {
+            $activity->level = rand(1, 5); // Generate a random level
+        });
+        
+        return view('activity.index', compact('activities'));
     }
 
-    // Show quizzes based on the subject
-    public function show($id)
+    // Show form to create a new activity
+    public function create()
     {
-        $user = Auth::user(); // Get the authenticated user
-    
-        // If the user is a student, only show their own results based on student_name
-        if ($user->type === 'student') {
-            // Fetch only the result for this student using student_name
-            $result = Result::where('id', $id)
-                            ->where('student_name', $user->name) // Filter by student_name
-                            ->firstOrFail(); // Will throw a 404 if not found
-        } else {
-            // If the user is not a student (e.g., admin), allow viewing all results
-            $result = Result::findOrFail($id); // Admin can view all results
-        }
-    
-        // Return the view with the result data
-        return view('activity.quiz', compact('result'));
-    }    
+        return view('activity.create');
+    }
 
-    // Submit quiz answers
-    public function submitQuiz(Request $request)
+    // Store a newly created activity
+    public function store(Request $request)
     {
-        // Logic to handle quiz submission and scoring
-        // Example: Check if the selected answer matches the correct option
-        $quiz = Activity::find($request->quiz_id);
+        $request->validate([
+            'subject' => 'required|string|max:255',
+            'level' => 'required|string|max:255',
+            'question' => 'required|string',
+            'option_a' => 'required|string',
+            'option_b' => 'required|string',
+            'option_c' => 'required|string',
+            'option_d' => 'required|string',
+        ]);
 
-        if ($quiz && $quiz->correct_option === $request->answer) {
-            // Handle correct answer, store score or mark as correct
-            return redirect()->route('activities.index')->with('success', 'Correct answer!');
-        } else {
-            // Handle incorrect answer
-            return redirect()->route('activities.index')->with('error', 'Incorrect answer, please try again!');
-        }
+        Activity::create($request->all());
+
+        return redirect()->route('activity.index')->with('success', 'Activity created successfully.');
+    }
+
+    public function show(Activity $quiz)
+    {
+        return view('activity.show', compact('quiz'));
+    }
+
+    public function edit(Activity $quiz)
+    {
+        return view('activity.edit', compact('quiz'));
+    }
+
+    public function destroy(Activity $quiz)
+    {
+        $quiz->delete();
+        return redirect()->route('activity.index')->with('success', 'Activity deleted successfully.');
+    }
+
+
+    // Update an existing activity
+    public function update(Request $request, Activity $activity)
+    {
+        $request->validate([
+            'subject' => 'required|string|max:255',
+            'level' => 'required|string|max:255',
+            'question' => 'required|string',
+            'option_a' => 'required|string',
+            'option_b' => 'required|string',
+            'option_c' => 'required|string',
+            'option_d' => 'required|string',
+        ]);
+
+        $activity->update($request->all());
+
+        return redirect()->route('activity.index')->with('success', 'Activity updated successfully.');
     }
 }

@@ -52,12 +52,10 @@ Route::delete('/profile/delete/{id}', [profileController::class, 'destroy'])->na
 // Route::get('/create',[profileController::class, 'create'])->name('profile.create');;
 
 
-// Route for displaying available quizzes
 Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
-
-// Route for displaying quizzes by subject
-Route::get('/quiz/{id}', [ActivityController::class, 'show'])->name('activities.show');
-
-// Route for submitting quiz answers
-Route::post('/submit-quiz', [ActivityController::class, 'submitQuiz'])->name('submit.quiz');
-
+Route::get('/activities/create', [ActivityController::class, 'create'])->middleware('can:admin')->name('activities.create');
+Route::post('/activities', [ActivityController::class, 'store'])->middleware('can:admin')->name('activities.store');
+Route::get('/activities/{activity}/edit', [ActivityController::class, 'edit'])->middleware('can:admin')->name('activities.edit');
+Route::put('/activities/{activity}', [ActivityController::class, 'update'])->middleware('can:admin')->name('activities.update');
+Route::delete('/activities/{activity}', [ActivityController::class, 'destroy'])->middleware('can:admin')->name('activities.destroy');
+Route::get('/activities/{activity}', [ActivityController::class, 'show'])->name('activities.show');
