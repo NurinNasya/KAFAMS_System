@@ -20,7 +20,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            background-color: #004d00;
+            background-color: #004d80;
             padding-top: 20px;
             transition: width 0.3s;
         }
@@ -35,12 +35,12 @@
         }
 
         .sidebar a:hover {
-            background-color: #006600;
+            background-color: #0066a1;
             color: #f1f1f1;
         }
 
         .sidebar a.active {
-            background-color: #005500;
+            background-color: #003d66;
             color: white;
         }
 
@@ -59,7 +59,7 @@
         }
 
         .navbar {
-            background-color: #004d00;
+            background-color: #004d80;
             color: white;
             padding: 10px 20px;
             margin-bottom: 20px;

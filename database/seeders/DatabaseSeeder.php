@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ResultsTableSeeder::class,
             BulletinsTableSeeder::class,
             ProfilesTableSeeder::class,
+            ActivitiesTableSeeder::class,
         ]);
     }
 }

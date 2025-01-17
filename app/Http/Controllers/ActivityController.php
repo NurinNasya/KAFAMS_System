@@ -2,17 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\activityModel;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Activity;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\View\View;
-
+use Illuminate\Support\Facades\Auth;
 
 class ActivityController extends Controller
 {
+    // Display all quizzes
     public function index()
     {
-        return view('activity.index');
+        // Fetch all quizzes from the database
+        $quizzes = Activity::all();
+
+        // Return the view with the quizzes data
+        return view('activity.index', compact('quizzes'));
+    }
+
+    // Show quizzes based on the subject
+    public function show($id)
+    {
+        $user = Auth::user(); // Get the authenticated user
+    
+        // If the user is a student, only show their own results based on student_name
+        if ($user->type === 'student') {
+            // Fetch only the result for this student using student_name
+            $result = Result::where('id', $id)
+                            ->where('student_name', $user->name) // Filter by student_name
+                            ->firstOrFail(); // Will throw a 404 if not found
+        } else {
+            // If the user is not a student (e.g., admin), allow viewing all results
+            $result = Result::findOrFail($id); // Admin can view all results
+        }
+    
+        // Return the view with the result data
+        return view('activity.quiz', compact('result'));
+    }    
+
+    // Submit quiz answers
+    public function submitQuiz(Request $request)
+    {
+        // Logic to handle quiz submission and scoring
+        // Example: Check if the selected answer matches the correct option
+        $quiz = Activity::find($request->quiz_id);
+
+        if ($quiz && $quiz->correct_option === $request->answer) {
+            // Handle correct answer, store score or mark as correct
+            return redirect()->route('activities.index')->with('success', 'Correct answer!');
+        } else {
+            // Handle incorrect answer
+            return redirect()->route('activities.index')->with('error', 'Incorrect answer, please try again!');
+        }
     }
 }

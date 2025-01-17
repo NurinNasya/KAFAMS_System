@@ -9,20 +9,43 @@
 @extends($layout)
 
 @section('content')
-<div class="row mb-4">
-    <div class="col-lg-12">
-        <div class="d-flex justify-content-between align-items-center">
-            <h2>Extra Activities & Quizzes</h2>
-        </div>
-    </div>
-</div>
+<div class="container">
+    <h1>Available Quizzes</h1>
 
-<div class="row mb-4">
-    <div class="col-lg-12">
-        <div class="d-flex justify-content-between align-items-center">
-            <h2>Coming Soon (6/1/2024)</h2>
-        </div>
-    </div>
+    <!-- Check if there are quizzes -->
+    @if($quizzes->count() > 0)
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Question</th>
+                    <th>Options</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($quizzes as $quiz)
+                    <tr>
+                        <td>{{ $quiz->subject }}</td>
+                        <td>{{ $quiz->question }}</td>
+                        <td>
+                            <ul>
+                                <li>{{ $quiz->option_a }}</li>
+                                <li>{{ $quiz->option_b }}</li>
+                                <li>{{ $quiz->option_c }}</li>
+                                <li>{{ $quiz->option_d }}</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <!-- Link to start the quiz for the subject -->
+                            <a href="{{ route('activities.show', $quiz->id) }}" class="btn btn-primary">Take Quiz</a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <p>No quizzes available at the moment.</p>
+    @endif
 </div>
-
 @endsection
